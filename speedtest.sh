@@ -1,13 +1,18 @@
+# modified on 20171026 to add hour and IP address
 #install info on: https://www.howtoforge.com/tutorial/check-internet-speed-with-speedtest-cli-on-ubuntu/
 #then will need to make the file executable
 #write the headers, when needed
-#echo "Date;Time;Ping;Download;Upload" > speeds.csv
+#echo "IP,Date,Day,Time,Hour,Download,Upload" > speeds.csv
+#IP address so I can see where I am checking, and also check IP address changes at home
+dig +short myip.opendns.com @resolver1.opendns.com  | tr '\n' ',' >>speeds.csv
 #date string
 date +%Y-%m-%d  | tr '\n' ',' >>speeds.csv
 #And add day of week so can look at weekdays vs weekends
 date +%u  | tr '\n' ',' >>speeds.csv
 #then add time
 date +"%T" | tr '\n' ',' >>speeds.csv
+#then add hour, so can look at averages per hour of the day
+date +"%H" | tr '\n' ',' >>speeds.csv
 #speedtest-cli --simple | tr '\n' ';' >>speeds.csv
 #trying to see if can output to a variable we can break down piece by piece
 results=$(speedtest-cli --simple)
